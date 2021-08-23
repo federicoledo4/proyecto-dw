@@ -38,6 +38,7 @@ function sadMoment(booleano){
     } 
 }
  //Fin de los detalles estéticos
+ 
 let cuenta = false;
 let usuario = {};
 
