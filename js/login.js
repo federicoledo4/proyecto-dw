@@ -4,7 +4,7 @@
 document.addEventListener("DOMContentLoaded", function(e){
   
 });
-
+//funcion que verifica los datos introducidos con un aviso y memoria
 let contador = 1
 function verificar() {
 
@@ -39,6 +39,7 @@ function sadMoment(booleano){
 }
  //Fin de los detalles estéticos
  
+ //declaración y modificacion de variables 
 let cuenta = false;
 let usuario = {};
 
@@ -53,7 +54,7 @@ if (sessionStorage.usuario !== undefined) {
   }
 }
 
-//Saluda y declara variables 
+//Saluda, declara y modifica mas variables 
 if (localStorage.usuario !== undefined) {
   usuario = JSON.parse(localStorage.getItem("usuario"));
   cuenta = true;
@@ -65,12 +66,14 @@ if (localStorage.usuario !== undefined) {
   }
 }
 
+//Estas conectado?
 function logueado() {
   if (!cuenta) {
     location.href = "login.html";
   }
 }
 
+//Desconecta
 function desconectarse() {
     if (localStorage.usuario !== undefined) {
       localStorage.removeItem("usuario");

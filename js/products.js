@@ -35,6 +35,7 @@ function sortCategories(criteria, array){
     return result;
 }
 
+//Muestra la lista de productos que está en el json
 function showCategoriesList(){
 
     let htmlContentToAppend = "";
