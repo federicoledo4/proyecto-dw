@@ -140,3 +140,9 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+.usuario { 
+  color: white;
+  background-color: transparent;
+  width: 4cm;
+}
+
