@@ -56,7 +56,7 @@ function showProductsList(){
             ((productName == undefined) || (productName != undefined && product.name.toLowerCase().includes(productName)))){
 
             htmlContentToAppend += `
-            <a href="category-info.html" class="list-group-item list-group-item-action">
+            <a href="product-info.html" class="list-group-item list-group-item-action">
                 <div class="row">
                     <div class="col-3">
                         <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
@@ -102,7 +102,7 @@ function showProductsList(){
             imageWidth: 400,
             imageHeight: 200,
             imageAlt: 'Custom image',
-          })
+        })
     }
     //Fin de la estética de la lista vacia
 }

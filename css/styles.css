@@ -146,3 +146,38 @@ a.custom-card:hover {
   width: 4cm;
 }
 
+.puntuacion {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.puntuacion input {
+  position: absolute;
+  top: -100px;
+}
+
+
+.puntuacion label {
+  float: right;
+  color: #c1b8b800;
+  width: 1.5cm;
+  height: 1.2cm;
+  background-image: url("../img/no_cars.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.puntuacion label:hover,
+.puntuacion label:hover ~ label,
+.puntuacion input:checked ~ label {
+  color: rgba(0, 0, 255, 0);
+  background-image: url("../img/cars.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.icon{
+    width: 1cm;
+    height: 1cm;
+}
