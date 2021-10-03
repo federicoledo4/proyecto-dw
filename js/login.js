@@ -1,3 +1,4 @@
+document.body.innerHTML+='<audio src="" id="audioDesconectarse" autoplay></audio>'
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -5,7 +6,33 @@ document.addEventListener("DOMContentLoaded", function(e){
   
 });
 //función que verifica los datos introducidos con un aviso y memoria
+let booleanoSaludo=true
 let contador = 1
+
+//alerta memes
+function alertMeme(imgsrc, tittleText, text){
+  Swal.fire({
+      title: tittleText,
+      text: text,
+      imageUrl: imgsrc,
+      imageWidth: 400,
+      imageHeight: 200,
+      imageAlt: 'Custom image',
+  });
+}
+
+//habla
+function hablar(palabras){
+  let vocesDisponibles=speechSynthesis.getVoices()
+let mensaje = new SpeechSynthesisUtterance();
+    mensaje.voice = vocesDisponibles[7];
+    mensaje.rate = 1;
+    mensaje.text = palabras;
+    mensaje.pitch = 1;
+    // ¡Habla!
+    speechSynthesis.speak(mensaje);
+}
+
 function verificar() {
 
     let dato1 = document.getElementById("user");
@@ -32,10 +59,18 @@ function verificar() {
 //Detalles estéticos del botón de desconectar
 function sadMoment(booleano){
     if (booleano) {
-      document.getElementById("desconectarse").style = "color:  rgba(255, 235, 205, 0); background-image:url('img/desconectar.gif'); border-color: rgb(255, 0, 0); background-size: contain;";
+      document.getElementById("desconectarse").style = "color:rgb(255, 0, 0); background-image:url('img/desconectar.gif'); border-color: rgb(255, 0, 0); background-size: contain; background-color:white;";
+      document.getElementById("desconectarse").innerHTML="Nooooo";
+      document.getElementById("audioDesconectarse").src="audio/loquendo1.mp3";
     }else{
       document.getElementById("desconectarse").style = "color: white; background-color: rgba(0, 0, 0, 0); background-image: url('img/desconectar.jpg'); border-color: rgb(255, 0, 0); background-size: cover;";
+      document.getElementById("desconectarse").innerHTML="Desconectarse";
+      document.getElementById("audioDesconectarse").src="audio/loquendo2.mp3";
     } 
+}
+
+function explotar(){
+  document.getElementById("audioDesconectarse").src="audio/loquendo3.mp3";
 }
  //Fin de los detalles estéticos
  
@@ -50,17 +85,35 @@ if (sessionStorage.usuario !== undefined) {
   document.getElementById("usuario").innerHTML = usuario.nombre;
   //Saludo sessionStorage
   if (cuenta && usuario.primeraVez) {
+    document.addEventListener("click", () => {
+      if (booleanoSaludo) {
+        let vocesDisponibles=speechSynthesis.getVoices();
+        let mensaje = new SpeechSynthesisUtterance();
+        mensaje.voice = vocesDisponibles[7];
+        mensaje.rate = 1;
+        mensaje.text = "Bienvenido barra aaa/ a la matrix"+usuario.nombre+"si oyes a lokendo no le creas";
+        mensaje.pitch = 1;
+        // ¡Habla!
+        speechSynthesis.speak(mensaje);
+        booleanoSaludo= false;
+      }
+    });
     Swal.fire({
       position: 'center',
       icon: 'success',
       title: 'Bienvenido ' + usuario.nombre,
       showConfirmButton: false,
       timer: 3000
-    })
+    });
+    
+
     usuario.primeraVez = false;
     sessionStorage.setItem("usuario", JSON.stringify(usuario));
     sessionStorage.removeItem("usuario.primeraVez");
-  }
+
+  }else{
+    document.removeEventListener("click",()=>{});
+    }
 }
 
 //Saluda, declara, pone el nombre de usuario y modifica mas variables 
@@ -71,16 +124,31 @@ if (localStorage.usuario !== undefined) {
   document.getElementById("usuario").innerHTML = usuario.nombre;
   //Saludo localStorage
   if (cuenta && usuario.primeraVez) {
+    document.addEventListener("click", () => {
+      if (booleanoSaludo) {
+        let vocesDisponibles=speechSynthesis.getVoices();
+        let mensaje = new SpeechSynthesisUtterance();
+        mensaje.voice = vocesDisponibles[7];
+        mensaje.rate = 1;
+        mensaje.text = "Bienvenido barra aaa/ a la matrix"+usuario.nombre+"si oyes a lokendo no le creas";
+        mensaje.pitch = 1;
+        // ¡Habla!
+        speechSynthesis.speak(mensaje);
+        booleanoSaludo= false;
+      }
+    });
     Swal.fire({
       position: 'center',
       icon: 'success',
-      title: 'Bienvenido ' + usuario.nombre,
+      title: 'Bienvenido/a ' + usuario.nombre,
       showConfirmButton: false,
       timer: 3000
-    })
+    });
+
     usuario.primeraVez = false;
     sessionStorage.setItem("usuario", JSON.stringify(usuario));
     sessionStorage.removeItem("usuario.primeraVez");
+    
   }
 }
 
@@ -102,15 +170,12 @@ function desconectarse() {
     cuenta = false;
     logueado();
 }
-//Estética de desconexión
-let clicksAUsuario = 0
-function clickUsuario(){
-  if (clicksAUsuario===0) {
-    document.getElementById("nav").innerHTML += `<button class="py-2 d-none d-md-inline-block" id="desconectarse" onclick="desconectarse()" onmouseover="sadMoment(true)" onmouseleave="sadMoment(false)" style="color: white; background-color: rgba(0, 0, 0, 0); background-image: url('img/desconectar.jpg'); border-color: rgb(255, 0, 0); background-size: cover;" >Desconectarse</button>`
-    clicksAUsuario = 1
-  }else{
-    document.getElementById("nav").removeChild(document.getElementById("desconectarse"))
-    clicksAUsuario = 0
-  }
-  
-}
+//No se porqué pero si no repito esta parte se cambia la voz a inglés
+let vocesDisponibles=speechSynthesis.getVoices()
+    let mensaje = new SpeechSynthesisUtterance();
+    mensaje.voice = vocesDisponibles[7];
+    mensaje.rate = 1;
+    mensaje.text = "Bienvenido barra aaa/ a la matrix"+usuario.nombre+"si oyes a loquendo no le creas";
+    mensaje.pitch = 1;
+    // ¡Habla!
+    speechSynthesis.speak(mensaje);

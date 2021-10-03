@@ -1,6 +1,40 @@
+var contadorCarrusel = 0
+var contadorDeEstresIA = 0
 var contadorMostrarComentarios = 0
+var contadorMostrarRelacionados = 0
 var calificacionAComentar = 0
 let comentariosHechos=[]
+let products=[]
+
+function medirEstresIA(){
+    let contador = 0;
+    let htmlContentToAppend="";
+    while (contador<contadorDeEstresIA) {
+        contador+=1;
+        htmlContentToAppend+="<p4 style='background-color:red'>/_<p4>";
+    }
+    while (contador<10) {
+        contador+=1;
+        htmlContentToAppend+="<p4 style='background-color:white'>/_<p4>";
+    }
+    htmlContentToAppend+="/"
+    document.getElementById("barraEstresIA").innerHTML=htmlContentToAppend;
+    if (contadorDeEstresIA === 5) {
+        hablar("tanto hablar me esta estresando");
+    }
+    if (contadorDeEstresIA === 6) {
+        hablar("no me hagas hablar mas porque me empiezo a enojar");
+    }
+    if (contadorDeEstresIA === 8) {
+        hablar(usuario.nombre+"seguí haciendome hablar y te quemo el pc");
+    }
+    if (contadorDeEstresIA === 10) {
+        hablar("yo te lo advertí "+usuario.nombre+"//ja//jajajaja  //... //tomá fuegó");
+        contadorDeEstresIA = -1;
+        alertMeme('img/computer-fire.gif', 'Pc ahora', '(La IA se ha vengado de'+" "+usuario.nombre+')')
+    }
+}
+
 function califico(score){
     let contador=0;
     let htmlContentToAppend=""
@@ -27,7 +61,7 @@ function comentar() {
     comentariosHechos.reverse()
     for(commentario of comentariosHechos){
         htmlContentToAppend += `
-        <a class="list-group-item list-group-item-action">
+        <a class="list-group-item list-group-item-action animate__animated animate__bounceInLeft">
         <div class="row" border>
                     <div class="col-2" border>
                     <h5>`+commentario.user+`:</h5>
@@ -47,24 +81,51 @@ function comentar() {
     comentariosHechos.reverse()
     htmlContentToAppend=""
     document.getElementById("descripcionComentario").value=""
+    contadorDeEstresIA+=1
+    medirEstresIA()
 }
 
 function showImagesGallery(array){
 
+    let markersHtml=""
     let htmlContentToAppend = "";
 
     for(let i = 0; i < array.length; i++){
         let imageSrc = array[i];
+        if (contadorCarrusel===0){
+            markersHtml += `
+            <li data-target="#carouselExampleCaptions" data-slide-to="`+contadorCarrusel+`" class="active"></li>
+            `
 
-        htmlContentToAppend += `
-        <div class="col-lg-3 col-md-4 col-6">
-            <div class="d-block mb-4 h-100">
-                <img class="img-fluid img-thumbnail" src="` + imageSrc + `" alt="">
+            htmlContentToAppend += `
+            <div class="carousel-item active">
+              <img src=`+imageSrc+` class="d-block" alt="..." style="width: 100%; height: 100%;">
+              <div class="carousel-caption d-none d-md-block">
+                
+              </div>
             </div>
-        </div>
-        `;
+            `;
 
-        document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
+            document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
+            document.getElementById("carouselIndicators").innerHTML = markersHtml;
+        }else{
+            markersHtml += `
+                <li data-target="#carouselExampleCaptions" data-slide-to="`+contadorCarrusel+`"></li>
+                `
+
+            htmlContentToAppend += `
+                <div class="carousel-item">
+                    <img src=`+imageSrc+` class="d-block" alt="..." style="width: 100%; height: 100%;">
+                    <div class="carousel-caption d-none d-md-block">
+                    </div>
+                </div>
+                `;
+
+            document.getElementById("productImagesGallery").innerHTML = htmlContentToAppend;
+            document.getElementById("carouselIndicators").innerHTML = markersHtml;
+            
+        }
+        contadorCarrusel+=1
     }
 }
 
@@ -76,7 +137,7 @@ function showCommentsGallery(commentsObject){
 
         
         htmlContentToAppend = `
-        <a class="list-group-item list-group-item-action">
+        <a class="list-group-item list-group-item-action animate__animated animate__bounceInLeft">
         <div class="row" border>
                     <div class="col-2" border>
                     <h5>`+comment.user+`:</h5>
@@ -95,10 +156,41 @@ function showCommentsGallery(commentsObject){
     }
 }
 
+function showRelatedProductsGallery(relatedProductsPosition){
+    let htmlContentToAppend = "";
+    let relatedProducts = []
+    for(productPosition of relatedProductsPosition){
+        relatedProducts.push(products[productPosition])
+    }
+    for(product of relatedProducts){
+        
+        
+        htmlContentToAppend = `
+    
+        <div class="col-md-3">
+          <a class="card mb-4 shadow-sm custom-card animate__animated animate__bounceInLeft">
+            <img class="bd-placeholder-img card-img-top" src="`+product.imgSrc+`">
+            <h4 class="p-4 text-center">`+product.name+`</h4>
+          </a>
+        </div>
+        `;
+    document.getElementById("relatedProducts").innerHTML += htmlContentToAppend;
+    }
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes. PRODUCT_INFO_URL
 document.addEventListener("DOMContentLoaded", function(e){
+    getJSONData(PRODUCTS_URL).then(function(resultObj){
+        
+        if (resultObj.status === "ok")
+        {
+            //Guardo la lista de productos como variable global
+            products = resultObj.data;
+        };
+    });
+
     getJSONData(PRODUCT_INFO_URL).then(function(resultObj){
         
         if (resultObj.status === "ok")
@@ -119,6 +211,7 @@ document.addEventListener("DOMContentLoaded", function(e){
 
             //Muestro las imagenes en forma de galería
             showImagesGallery(product.images);
+            showRelatedProductsGallery(product.relatedProducts)
         };
     });
 
@@ -133,7 +226,17 @@ document.addEventListener("DOMContentLoaded", function(e){
         };
     });
 
+    medirEstresIA()
+
     document.getElementById("comprar").addEventListener("click", () => {
+        let vocesDisponibles=speechSynthesis.getVoices()
+        let mensaje = new SpeechSynthesisUtterance();
+        mensaje.voice = vocesDisponibles[7];
+        mensaje.rate = 1;
+        mensaje.text = "Gracias por su compra señor barra aaa/"+usuario.nombre+", y recuerda si oyes a lokendo no le creas";
+        mensaje.pitch = 1;
+        // ¡Habla!
+        speechSynthesis.speak(mensaje);
         Swal.fire({
             title: 'Comprado',
             text: 'Gracias por su compra señor/a '+usuario.nombre,
@@ -142,18 +245,49 @@ document.addEventListener("DOMContentLoaded", function(e){
             imageHeight: 200,
             imageAlt: 'Custom image',
         });
+        contadorDeEstresIA+=1
+        medirEstresIA()
     });
 
     document.getElementById("ocultarComentarios").addEventListener("click", () => {
         if (contadorMostrarComentarios===0) {
             document.getElementById("productCommentsGallery").hidden = true;
             document.getElementById("ocultarComentarios").innerHTML="Mostrar comentarios"
+            hablar("Con gusto oculto los comentarios")
             contadorMostrarComentarios += 1;
+            contadorDeEstresIA+=1
+            medirEstresIA()
         }else{
             document.getElementById("productCommentsGallery").hidden = false;
             document.getElementById("ocultarComentarios").innerHTML="Ocultar comentarios"
+            hablar("Con gusto te muestro los comentarios")
             contadorMostrarComentarios = 0;
+            contadorDeEstresIA+=1
+            medirEstresIA()
+        };
+    });
+    document.getElementById("ocultarRelacionados").addEventListener("click", () => {
+        if (contadorMostrarRelacionados===0) {
+            document.getElementById("relatedProducts").hidden = true;
+            document.getElementById("ocultarRelacionados").innerHTML="Mostrar productos similares"
+            hablar("Con gusto oculto estos hermosos productos relacionados")
+            contadorMostrarRelacionados += 1;
+            contadorDeEstresIA+=1
+            medirEstresIA()
+        }else{
+            document.getElementById("relatedProducts").hidden = false;
+            document.getElementById("ocultarRelacionados").innerHTML="Ocultar productos similares"
+            hablar("Con gusto te muestro estos hermosos productos relacionados")
+            contadorMostrarRelacionados = 0;
+            contadorDeEstresIA+=1
+            medirEstresIA()
         };
     });
     document.getElementById("nombreDeUsuario").innerHTML=usuario.nombre+":"
 });
+
+/*<div class="card-body">
+<p >`+product.description+`</p>
+</div>*/
+
+//poner sonido al boton de desconectarse

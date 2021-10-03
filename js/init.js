@@ -43,9 +43,24 @@ var getJSONData = function(url){
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
-document.addEventListener("DOMContentLoaded", function(e){
+document.addEventListener("DOMContentLoaded", function(){
   logueado()
   
 });
 
+function changeToHref(hrefx){
+  location.href=hrefx
+}
 
+document.getElementById("nav").innerHTML +=`
+<div class="dropdown">
+  <button class="py-2 d-none d-md-inline-block usuario dropdown-toggle" type="button" id="usuario" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Usuario
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="background-color:#343A40;">
+    <button class="dropdown-item enlaceNormal" onclick="changeToHref('cart.html')">Ver mi carrito</button>
+    <button class="dropdown-item enlaceNormal" onclick="changeToHref('my-profile.html')">Mi perfil</button>
+    <button class="dropdown-item py-2 d-none d-md-inline-block" type="button" id="desconectarse" onmousedown="explotar()" onclick="desconectarse()" onmouseover="sadMoment(true)" onmouseleave="sadMoment(false)" style="color: white; background-color: rgba(0, 0, 0, 0); background-image: url('img/desconectar.jpg'); border-color: rgb(255, 0, 0); background-size: cover;" >Cerrar sesión</button>
+  </div>
+</div>
+`;

@@ -181,3 +181,8 @@ a.custom-card:hover {
     width: 1cm;
     height: 1cm;
 }
+
+.enlaceNormal{
+  background-color: #343A40;
+  color: white;
+}
