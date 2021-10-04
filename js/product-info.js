@@ -229,14 +229,7 @@ document.addEventListener("DOMContentLoaded", function(e){
     medirEstresIA()
 
     document.getElementById("comprar").addEventListener("click", () => {
-        let vocesDisponibles=speechSynthesis.getVoices()
-        let mensaje = new SpeechSynthesisUtterance();
-        mensaje.voice = vocesDisponibles[7];
-        mensaje.rate = 1;
-        mensaje.text = "Gracias por su compra señor barra aaa/"+usuario.nombre+", y recuerda si oyes a lokendo no le creas";
-        mensaje.pitch = 1;
-        // ¡Habla!
-        speechSynthesis.speak(mensaje);
+        hablar("Gracias por su compra señor barra aaa/"+usuario.nombre+", y recuerda si oyes a lokendo no le creas");
         Swal.fire({
             title: 'Comprado',
             text: 'Gracias por su compra señor/a '+usuario.nombre,

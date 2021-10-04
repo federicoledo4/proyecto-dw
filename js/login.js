@@ -1,4 +1,4 @@
-document.body.innerHTML+='<audio src="" id="audioDesconectarse" autoplay></audio>'
+document.body.innerHTML += '<audio src="" id="audioDesconectarse" autoplay></audio>'
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -6,8 +6,15 @@ document.addEventListener("DOMContentLoaded", function(e){
   
 });
 //función que verifica los datos introducidos con un aviso y memoria
-let booleanoSaludo=true
-let contador = 1
+let booleanoSaludo=true;
+let contador = 1;
+let vocesDisponibles=[""];
+
+function obtenerVoces(){
+vocesDisponibles = window.speechSynthesis.getVoices();
+}
+obtenerVoces();
+setTimeout(obtenerVoces, 100)
 
 //alerta memes
 function alertMeme(imgsrc, tittleText, text){
@@ -23,7 +30,6 @@ function alertMeme(imgsrc, tittleText, text){
 
 //habla
 function hablar(palabras){
-  let vocesDisponibles=speechSynthesis.getVoices()
 let mensaje = new SpeechSynthesisUtterance();
     mensaje.voice = vocesDisponibles[7];
     mensaje.rate = 1;
@@ -87,14 +93,7 @@ if (sessionStorage.usuario !== undefined) {
   if (cuenta && usuario.primeraVez) {
     document.addEventListener("click", () => {
       if (booleanoSaludo) {
-        let vocesDisponibles=speechSynthesis.getVoices();
-        let mensaje = new SpeechSynthesisUtterance();
-        mensaje.voice = vocesDisponibles[7];
-        mensaje.rate = 1;
-        mensaje.text = "Bienvenido barra aaa/ a la matrix"+usuario.nombre+"si oyes a lokendo no le creas";
-        mensaje.pitch = 1;
-        // ¡Habla!
-        speechSynthesis.speak(mensaje);
+        hablar("Bienvenido barra aaa/ a la matrix"+usuario.nombre+"si oyes a lokendo no le creas");
         booleanoSaludo= false;
       }
     });
@@ -126,14 +125,7 @@ if (localStorage.usuario !== undefined) {
   if (cuenta && usuario.primeraVez) {
     document.addEventListener("click", () => {
       if (booleanoSaludo) {
-        let vocesDisponibles=speechSynthesis.getVoices();
-        let mensaje = new SpeechSynthesisUtterance();
-        mensaje.voice = vocesDisponibles[7];
-        mensaje.rate = 1;
-        mensaje.text = "Bienvenido barra aaa/ a la matrix"+usuario.nombre+"si oyes a lokendo no le creas";
-        mensaje.pitch = 1;
-        // ¡Habla!
-        speechSynthesis.speak(mensaje);
+        hablar("Bienvenido barra aaa/ a la matrix"+usuario.nombre+"si oyes a lokendo no le creas");
         booleanoSaludo= false;
       }
     });
@@ -170,12 +162,3 @@ function desconectarse() {
     cuenta = false;
     logueado();
 }
-//No se porqué pero si no repito esta parte se cambia la voz a inglés
-let vocesDisponibles=speechSynthesis.getVoices()
-    let mensaje = new SpeechSynthesisUtterance();
-    mensaje.voice = vocesDisponibles[7];
-    mensaje.rate = 1;
-    mensaje.text = "Bienvenido barra aaa/ a la matrix"+usuario.nombre+"si oyes a loquendo no le creas";
-    mensaje.pitch = 1;
-    // ¡Habla!
-    speechSynthesis.speak(mensaje);
