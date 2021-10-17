@@ -4,36 +4,21 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <title>eMercado - Todo lo que busques está aquí</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
 </head>
 
-<body>
+<body overflow="scroll">
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between" id="nav">
       <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
@@ -42,13 +27,87 @@
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
     </div>
   </nav>
+  <h2 class="text-center p-4" id="titulo">Carrito de Usuario</h2>
   <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 17/10/2021) y Entrega 7 (Fecha de entrega: 14/11/2021).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+    
+    <h5>Moneda: <select name="select" id="moneda">
+      <option value="URU" selected>URU</option>
+      <option value="USD">USD</option>
+      </select>
+    </h5>
+    <div style="border-color: black; border-style: outset; border-radius: 5% / 70%; position: relative; width:auto; top: 0; background-color: gray; padding-top: 0.5cm; padding-bottom: 0.5cm; padding-left: 0.5cm; padding-right: 0.5cm;">
+      <table border style="color: black; background-color: white; width: 100%; border-color: black; border-style: outset;">
+        <thead>
+          <th style="width: 5cm;">
+            Cosas:
+          </th>
+          <th style="width: 5cm;">
+            Precios:
+          </th>
+          <th style="width: 5cm;">
+            Cantidades:
+          </th>
+          <th style="width: 5cm;">
+            Subtotales:
+          </th>
+        </thead>
+        <tbody id="cuerpoTabla" class="carritoTh">
+        </tbody>
+        <tfoot>
+          <tr>
+            <th style="width: 1.5cm;">
+              Total: 
+            </th>
+            <th id="total" style="width: 1.5cm;color: black; background-color: white;">
+              0
+            </th>
+          </tr>
+        </tfoot>
+      </table>
     </div>
+    <hr>
+    <h5>Envio: 
+      <select name="select" id="envio" onchange="comprobarEnvio()">
+      <option value="si" selected>Si</option>
+      <option value="no">No</option>
+      </select>
+    </h5>
+    <br>
+    <div id="envioSi">
+      <p>Designe ubicación deseada:</p>
+      <div id="mapid" style="height: 500px;">
+      </div>
+      <button onclick="estoyAqui()">Mi ubicación</button>
+    </div>
+    <hr>
+    <h5>Forma de pago: 
+      <select name="select" id="formaDePago" onchange="comprobarFormaDePago()">
+        <option value="efectivo" selected>Efectivo</option>
+        <option value="tarjeta">Tarjeta de credito</option>
+      </select>
+    </h5>
+    <div id="tarjeta" hidden>
+      <label for="tarjeta">Tarjeta:</label>
+      <input type="number" name="tarjeta">
+    </div>
+    <div id="efectivo">
+      <label for="efectivo">Abitab</label>
+      <input type="radio" name="efectivo" checked>
+      <label for="efectivo">Redpagos</label>
+      <input type="radio" name="efectivo">
+    </div>
+    <hr>
+      <h5>
+        Contacto:
+      </h5>
+      <h6>
+        Tel: <input type="number">
+      </h6>
+      <h6>
+        Correo: <input type="email">
+      </h6>
+    <hr>
+     <button id="comprar">Comprar</button>
   </div>
   <div id="spinner-wrapper">
     <div class="lds-ring">
@@ -58,13 +117,26 @@
       <div></div>
     </div>
   </div>
+  <footer class="text-muted bg-light">
+    <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
+      <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
+    </div>
+  </footer>
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/dropzone.js"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/login.js"></script>
+  <script src="js/sweetalert2.all.min.js"></script>
   <script>logueado()</script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
 </body>
 
 </html>
