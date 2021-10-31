@@ -1,3 +1,7 @@
+img {
+  max-width: 100%;
+  height: auto;
+}
 .jumbotron, .card-body, .container, .site-header{
     font-family: 'Raleway', serif !important;
 }
@@ -191,4 +195,13 @@ a.custom-card:hover {
   font-style: italic;
   font-family: Arial, Helvetica, sans-serif;
   width: auto;
+}
+.userPicture{
+  width: 0.8cm;
+  height: 0.8cm;
+  border-radius: 1cm !important;
+  margin-right: 0.2cm !important;
+}
+.botonChico{
+  height: 1.3cm !important;
 }

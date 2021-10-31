@@ -3,73 +3,117 @@
 <html lang="en">
 
 <head>
+  <!-- Metas -->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
+  <!-- Titulo de la pestaña -->
   <title>eMercado - Todo lo que busques está aquí</title>
-
+  <!-- Links de librerias,etc -->
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-  </style>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <link href="css/dropzone.css" rel="stylesheet">
 </head>
 
 <body>
-  <nav class="site-header sticky-top py-1 bg-dark">
-    <div class="container d-flex flex-column flex-md-row justify-content-between" id="nav">
-      <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
-      <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
-      <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
-      <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
+  <audio id="audio" src="audio/ascensor.mp3" autoplay loop></audio>
+  <!-- Encabezado pegajoso -->
+  <div id="nav"></div>
+
+  <!-- Todo el contenido -->
+  <main role="main" class="pb-5">
+    <div class="text-center p-4">
+        <h2 id="perfil">Perfil de</h2>
     </div>
-  </nav>
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 6 (Fecha de entrega: 31/10/2021).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
+    <div class="container p-5">
+      <table>
+        <tr>
+          <th>Nombres reales:</th>
+          <td><input type="text" id="nombresReales"></td>
+        </tr>
+        <tr>
+        <th>Apellidos:</th>
+        <td><input type="text" id="apellidos"></td>
+        </tr>
+        <tr>
+          <th>
+            Edad:
+          </th>
+          <td>
+            <input type="number" id="edad">
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Teléfono:
+          </th>
+          <td>
+            <input type="number" id="telefono">
+          </td>
+        </tr>
+        <tr>
+          <th>
+            E-mail:
+          </th>
+          <td>
+            <input type="email" id="email">
+          </td>
+        </tr>
+      </table>
+      <button onclick="guardar()">Guardar</button>
     </div>
+
+    <div class="row py-4">
+      <div class="col-lg-6 mx-auto">
+        <h3>Imagen de usuario:</h3>
+          <!-- Upload image input-->
+          <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+              <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
+              <label id="upload-label" for="upload" class="font-weight-light text-muted">Subir imágen</label>
+              <div class="input-group-append">
+                  <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Subir imágen</small></label>
+              </div>
+          </div>
+          <br>
+          <div class="dropdown">
+            <button class="py-2 d-md-inline-block usuario nav-link dropdown-toggle botonChico" style="background-color: black;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img id="userImage" src="img/pepe2.gif" alt="" class="img-fluid rounded shadow-sm mx-auto userPicture"></img>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="background-color:#343A40;">
+              <button class="dropdown-item" onclick="elegirImagen('img/userPictures/pepe2.gif');"><img src="img/userPictures/pepe2.gif" alt="" class="img-fluid rounded shadow-sm mx-auto userPicture"></img></button>
+              <button class="dropdown-item" onclick="elegirImagen('img/userPictures/thortazo.gif');"><img src="img/userPictures/thortazo.gif" alt="" class="img-fluid rounded shadow-sm mx-auto userPicture"></img></button>
+              <button class="dropdown-item" onclick="elegirImagen('img/userPictures/Solaire.gif');"><img src="img/userPictures/Solaire.gif" alt="" class="img-fluid rounded shadow-sm mx-auto userPicture"></img></button>
+              <button class="dropdown-item" onclick="elegirImagen('img/userPictures/pan.gif');"><img src="img/userPictures/pan.gif" alt="" class="img-fluid rounded shadow-sm mx-auto userPicture"></img></button>
+              <button class="dropdown-item" onclick="elegirImagen('img/userPictures/Candidato a login.gif');"><img src="img/userPictures/Candidato a login.gif" alt="" class="img-fluid rounded shadow-sm mx-auto userPicture"></img></button>
+              
+            </div>
+          </div>
+
+          <!-- Uploaded image area-->
+          <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
+          <div id="imageResult" class="image-area mt-4"></div>
+
+      </div>
   </div>
+</div>
+    
+  </main>
+  <!-- Fin del contenido -->
+
+  <!-- Pie de página -->
   <footer class="text-muted bg-light">
     <div class="container">
+      <p class="float-right">
+        <a href="#">Volver arriba</a>
+      </p>
       <p>Este sitio forma parte de Desarrollo Web - JAP - 2020</p>
       <p>Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del obligatorio.</p>
     </div>
   </footer>
-  <div class="alert fade alert-success" role="alert" id="alertResult">
-    <span id="resultSpan"></span>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
+  <div id="spinner-wrapper"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
+<!-- Links de js -->
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/dropzone.js"></script>
@@ -79,5 +123,4 @@
   <script src="js/login.js"></script>
   <script>logueado()</script>
 </body>
-
 </html>

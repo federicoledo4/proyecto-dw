@@ -1,32 +1,28 @@
+img {
+    max-width: 100%;
+    height: auto;
+}
 .main {
     background-image: url("../img/login background.gif");
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     background-repeat: no-repeat;
     overflow: hidden;
     background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 
 
 .divFormulario{
-    margin-left: 40%;
-    background-position: center;
-    position: absolute;
-    top: 25%;
-    width: 20%;
-    
-    min-block-size: 40%;
-    max-zoom: 100%;
     text-align: center;
     background-image: url("../img/login texture.jpg");
-    user-zoom: fixed;
     color: white;
     background-color: black;
-    
-    
-    
+    min-width: 20vw;
+    height: auto;
 }
 
 .renglon{

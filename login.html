@@ -4,21 +4,21 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
   <meta name="description" content="">
   <title>eMercado - Todo lo que busques está aquí</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/album/">
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
   <link href="css/login.css" rel="stylesheet">
-  <script src="js/login.js"></script>
   
 </head>
 
 <body>
-  <div class="main">
-    <div class="divFormulario" id="formulario">
+  <div class="main m-0 vh-100 row justify-content-center align-items-center">
+    <div class="divFormulario col-auto p-2 text-center" id="formulario">
       <label for="user">Usuario</label><br>
       <input class="renglon" type="text" id="user" required>
       <hr>
@@ -27,9 +27,11 @@
       <hr>
       <label  for="Recuerdame">Recuerdame</label>
       <input  style="inline-size: 20%;" type="checkbox" name="Recuerdame" id="recordar"><br>
-      <input class="renglon" type="button" value="INICIAR SESIÓN" onclick=verificar()>
+      <input class="renglon" type="button" value="INICIAR SESIÓN" onclick="verificar()">
       <p>_</p>
     </div>
 </div>
+<script src="js/md5.min.js"></script>
+<script src="js/login.js"></script>
 </body>
 </html>

@@ -56,20 +56,16 @@ function showProductsList(){
             ((productName == undefined) || (productName != undefined && product.name.toLowerCase().includes(productName)))){
 
             htmlContentToAppend += `
-            <a href="product-info.html" class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="` + product.imgSrc + `" alt="` + product.description + `" class="img-thumbnail">
+            <div class="col-md-4">
+                <a href="product-info.html" class="card mb-4 shadow-sm custom-card">
+                    <img src="` + product.imgSrc + `" alt="` + product.description + `" class="bd-placeholder-img card-img-top">
+                    <h3 class="m-3">`+ product.name +`</h3>
+                    <div class="col card-body">
+                        <small>` + `<span style="font-size: 30px;">`+ "<strong>" + product.currency+ " " + product.cost + "</strong>"+ "<br>" +`</span>` + product.soldCount + ` artículos vendidos</small>
+                        <p class="card-text">` + product.description + `</p>
                     </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">`+ product.name +`</h4>
-                            <small>` + `<span style="font-size: 30px;">`+ "<strong>" + product.currency+ " " + product.cost + "</strong>"+ "<br>" +`</span>` + product.soldCount + ` artículos vendidos</small>
-                        </div>
-                        <p class="mb-1">` + product.description + `</p>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
             `
         }
         
