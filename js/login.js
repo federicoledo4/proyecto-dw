@@ -61,6 +61,7 @@ function verificar() {
       usuario.telefono="";
       usuario.email="";
       usuario.imgsrc="img/pepe2.gif"
+      usuario.contadorCompraExitosa=0
         if (usuarios[0]!==undefined){
           let contadorDeGuardado=0
           while (contadorDeGuardado<usuarios.length){

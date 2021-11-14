@@ -23,85 +23,178 @@
   <h2 class="text-center p-4" id="titulo">Carrito de Usuario</h2>
   <div class="container p-5">
     
-    <h5>Moneda: <select name="select" id="moneda">
+    <h5><strong>Moneda:</strong><select name="select" id="moneda">
       <option value="URU" selected>URU</option>
       <option value="USD">USD</option>
       </select>
     </h5>
-    <div style="border-color: black; border-style: outset; border-radius: 5% / 70%; position: relative; width:auto; top: 0; background-color: gray; padding-top: 0.5cm; padding-bottom: 0.5cm; padding-left: 0.5cm; padding-right: 0.5cm;">
-      <table border style="color: black; background-color: white; width: 100%; border-color: black; border-style: outset;">
+    <div style="border-color: black; border-style: outset; border-radius: 5% / 70%; position: relative; width:auto; top: 0; background-color: gray; padding-top: 0.5cm; padding-bottom: 0.5cm; padding-left: 0.5cm; padding-right: 0.5cm;" class="table-responsive">
+      <table border style="color: black; background-color: white; width: 100%; border-color: black; border-style: outset;" class="table">
         <thead>
-          <th style="width: 5cm;">
+          <th style="width: 5cm;" class="col">
             Cosas:
           </th>
-          <th style="width: 5cm;">
+          <th style="width: 5cm;" class="col">
             Precios:
           </th>
-          <th style="width: 5cm;">
+          <th style="width: 5cm;" class="col">
             Cantidades:
           </th>
-          <th style="width: 5cm;">
+          <th style="width: 5cm;" class="col">
             Subtotales:
           </th>
         </thead>
-        <tbody id="cuerpoTabla" class="carritoTh">
+        <tbody id="cuerpoTabla" class="carritoTh container">
         </tbody>
-        <tfoot>
-          <tr>
-            <th style="width: 1.5cm;">
+        <tfoot class="container">
+            <th style="width: 1.5cm;" class="col-4">
               Total: 
             </th>
-            <th id="total" style="width: 1.5cm;color: black; background-color: white;">
+            <th id="total" style="width: 1.5cm;color: black; background-color: white;" class="col-8">
               0
             </th>
-          </tr>
         </tfoot>
       </table>
     </div>
+    <form class="was-validated" method="post" id="cartForm" onsubmit="compraExitosa()">
     <hr>
-    <h5>Envio: 
-      <select name="select" id="envio" onchange="comprobarEnvio()">
+    <h5><strong>Envio:</strong> 
+      <select name="envio" id="envio" onchange="comprobarEnvio();">
       <option value="si" selected>Si</option>
       <option value="no">No</option>
       </select>
     </h5>
     <br>
     <div id="envioSi">
-      <p>Designe ubicación deseada:</p>
+      <p><strong>Designe ubicación deseada:</strong></p>
       <div id="mapid" style="height: 500px;">
       </div>
-      <button onclick="estoyAqui()">Mi ubicación</button>
+      <button type="button" onclick="estoyAqui()">Mi ubicación</button>
+      <br>
+      <br>
+      <p><strong>Dirección de envio:</strong></p>
+      <label for="calle">Calle:</label>
+      <input type="text" name="calle" class="form-control" id="calle" required>
+      <label for="numero"> Número:</label>
+      <input type="number" name="numero" class="form-control" id="numero" required>
+      <label for="esquina">Esquina:</label>
+      <input type="text" name="esquina" class="form-control" id="esquina" required>
+      <br>
+      <br>
+      <p><strong>Metodo de envio:</strong></p>
+      <input type="radio" name="metodoEnvio" value="20" checked>
+      <label for="metodoEnvio">Premium 1 dia (20%)</label>
+      <br>
+      <input type="radio" name="metodoEnvio" value="10">
+      <label for="metodoEnvio"> Normal 5 a 7 dias (10%)</label>
+      <br>
+      <input type="radio" name="metodoEnvio" value="5">
+      <label for="metodoEnvio">Lento 10 a 20 dias (5%)</label>
+      <br>
+      <br>
+      <div class="container">
+        <div class="list-group">
+          <a class="list-group-item list-group-item-action animate__animated animate__bounceInLeft">
+            <div class="row">
+              <div class="col-4" border>
+                <p class="mb-1">Total</p>
+              </div>
+              <div class="col-8" border>
+                <p class="mb-1" id="totalEnvio">numero</p>
+              </div>
+            </div>
+          </a>
+          <a class="list-group-item list-group-item-action animate__animated animate__bounceInLeft">
+            <div class="row">
+              <div class="col-4" border>
+                <p class="mb-1">Costo de envio</p>
+              </div>
+              <div class="col-8" border>
+                <p class="mb-1" id="costoEnvio">numero</p>
+              </div>
+            </div>
+          </a>
+          <a class="list-group-item list-group-item-action animate__animated animate__bounceInLeft">
+            <div class="row">
+              <div class="col-4" border>
+                <p class="mb-1">Costo final</p>
+              </div>
+              <div class="col-8" border>
+                <p class="mb-1" id="costoFinal">numero</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
     <hr>
-    <h5>Forma de pago: 
-      <select name="select" id="formaDePago" onchange="comprobarFormaDePago()">
-        <option value="efectivo" selected>Efectivo</option>
-        <option value="tarjeta">Tarjeta de credito</option>
-      </select>
+    
+    <h5><strong>Forma de pago:</strong>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#staticBackdrop" id="metodoDePago">
+        Seleccionar
+      </button>
+      <span id="metodoPagoInvalido" style="color: red;">Selecciona un método de pago válido.</span>
     </h5>
-    <div id="tarjeta" hidden>
-      <label for="tarjeta">Tarjeta:</label>
-      <input type="number" name="tarjeta">
-    </div>
-    <div id="efectivo">
-      <label for="efectivo">Abitab</label>
-      <input type="radio" name="efectivo" checked>
-      <label for="efectivo">Redpagos</label>
-      <input type="radio" name="efectivo">
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Forma de pago</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h5>
+            <select name="select" id="formaDePago" onchange="comprobarFormaDePago()">
+              <option value="efectivo" selected>Efectivo</option>
+              <option value="tarjeta">Tarjeta de credito</option>
+              <option value="transferenciaBancaria">Transferencia Bancaria</option>
+            </select>
+            </h5>
+            <div id="tarjeta" hidden>
+              <label for="nroTarjeta">Numero de tarjeta</label>
+              <input type="number" name="nroTarjeta" id="nroTarjeta" class="form-control">
+              <label for="codigoSeguridad">Codigo de seg.</label>
+              <input type="number" name="codigoSeguridad" id="codigoSeguridad" class="form-control">
+              <label for="vencimiento">Vencimiento (MM/AA)</label>
+              <input type="date" name="vencimiento" id="vencimiento" class="form-control">
+            </div>
+            <div id="efectivo">
+              <label for="efectivo">Abitab</label>
+              <input type="radio" name="efectivo" id="abitab" required>
+              <label for="efectivo">Redpagos</label>
+              <input type="radio" name="efectivo" id="redpagos" required>
+            </div>
+            <div id="transferenciaBancaria" hidden>
+              <label for="nroCuenta">Numero de cuenta</label>
+              <input type="number" name="nroCuenta" id="nroCuenta" class="form-control">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">ok</button>
+          </div>
+        </div>
+      </div>
     </div>
     <hr>
+
       <h5>
-        Contacto:
+        <strong>Contacto:</strong>
       </h5>
       <h6>
-        Tel: <input type="number">
+        Tel: <input type="number" id="tel" class="form-control" required>
       </h6>
       <h6>
-        Correo: <input type="email">
+        Correo: <input type="email" id="correo" class="form-control" required>
       </h6>
     <hr>
-     <button id="comprar">Comprar</button>
+    
+    <button type="submit" id="comprar" class="btn btn-primary">Comprar</button>
+    </form>
   </div>
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>
